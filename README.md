@@ -1,10 +1,18 @@
+工作和生活的诸多因素影响，当然主要是自己懒惰了，自己学Android的计划总是搁浅。之前买了挺多书籍，但是都没有用起来。正好最近自己有了一些想法，准备利用业余时间将这些书籍学习一遍，然后再练习一些完整的Demo.
+>>之所以要在Github上来建这么一个练习仓库，一来为了利用好家里和公司的业余时间，做好同步，二来为了督促自己更好的学习.
+
 ## AndroidDemo
  
-Practice demo based on  aosp
+Practice demo 
 ---
-AndroidDemo主要收纳自己以网上开源项目为基础而成的练习demo.
+AndroidDemo主要收纳自己的练习demo.
 
 
 
-###FitKit
-基于[EWeightScale](https://github.com/Jhuster/EWeightScale)而成. 
+#FirstCode 
+---
+基于郭霖著作的书新版《第一行代码》.
+
+#AndroidHeros
+---
+基于徐宜生著作的书《Android群英传》.

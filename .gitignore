@@ -1,32 +1,67 @@
 # .idea
 /*/.idea/
+/*/*/.idea/
+/*/*/*/.idea/
 
 
 # Built application files
 /*/*.apk
 /*/*.ap_
 
+/*/*/*.apk
+/*/*/*.ap_
+
+/*/*/*/*.apk
+/*/*/*/*.ap_
+
 # Files for the Dalvik VM
 /*/*.dex
+/*/*/*.dex
+/*/*/*/*.dex
 
 # Class files
 /*/*.class
+/*/*/*.class
+/*/*/*/*.class
 
 # Generated files
 /*/bin/
 /*/gen/
+
+/*/*/bin/
+/*/*/gen/
+
+/*/*/*/bin/
+/*/*/*/gen/
 
 # Gradle files
 /*/.gradle/
 /*/build/
 /*/*/build/
 
-# Mac temp file
-/*/.Ds_Store
+/*/*/.gradle/
+/*/*/build/
+/*/*/*/build/
+
+/*/*/*/.gradle/
+/*/*/*/build/
+/*/*/*/*/build/
 
 
 # Local configuration file(SDK path,etc)
 /*/local.properties
+/*/*/local.properties
+/*/*/*/local.properties
 
 # Proguard folder generated 
 /*/proguard/
+/*/*/proguard/
+/*/*/*/proguard/
+
+
+
+
+
+
+
+
