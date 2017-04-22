@@ -3,7 +3,7 @@ package com.example.lee.coolweather.util;
 import android.text.TextUtils;
 
 import com.example.lee.coolweather.db.City;
-import com.example.lee.coolweather.db.Country;
+import com.example.lee.coolweather.db.County;
 import com.example.lee.coolweather.db.Province;
 
 import org.json.JSONArray;
@@ -58,17 +58,17 @@ public class Utility {
     }
 
     /*解析县级书籍*/
-    public static boolean handleCountryResponce(String responce, int cityId){
+    public static boolean handlecountyResponce(String responce, int cityId){
         if (!TextUtils.isEmpty(responce)){
             try {
                 JSONArray allCountries = new JSONArray(responce);
                 for (int i=0; i<allCountries.length();i++){
-                    JSONObject countryObject = allCountries.getJSONObject(i);
-                    Country country = new Country();
-                    country.setCountryName(countryObject.getString("name"));
-                    country.setWeatherId(countryObject.getString("weather_id"));
-                    country.setCityId(cityId);
-                    country.save();
+                    JSONObject countyObject = allCountries.getJSONObject(i);
+                    County county = new County();
+                    county.setcountyName(countyObject.getString("name"));
+                    county.setWeatherId(countyObject.getString("weather_id"));
+                    county.setCityId(cityId);
+                    county.save();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

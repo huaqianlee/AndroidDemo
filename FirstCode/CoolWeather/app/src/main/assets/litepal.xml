@@ -5,7 +5,7 @@
     <list>
         <mapping class="com.example.lee.coolweather.db.Province"/>
         <mapping class="com.example.lee.coolweather.db.City"/>
-        <mapping class="com.example.lee.coolweather.db.Country"/>
+        <mapping class="com.example.lee.coolweather.db.County"/>
     </list>
 
 </litepal>
