@@ -13,6 +13,14 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +29,23 @@ public class MainActivity extends AppCompatActivity {
 
     public LocationClient mLocationClient;
     private TextView positionText;
+
+    private MapView mapView;
+    private BaiduMap baiduMap;
+    private boolean isFirstLocate = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+        mapView = (MapView) findViewById(R.id.bmap_view);
+        baiduMap = mapView.getMap();
+        baiduMap.setMyLocationEnabled(true);
+
+
         positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -47,7 +66,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestLocation() {
+        initLocation();
         mLocationClient.start();
+    }
+
+    private void navigateTo(BDLocation location) {
+        if (isFirstLocate) {
+            LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+            baiduMap.animateMapStatus(update);
+            update = MapStatusUpdateFactory.zoomTo(12f);
+            baiduMap.animateMapStatus(update);
+            isFirstLocate = false;
+        }
+
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+        locationBuilder.latitude(location.getLatitude());
+        locationBuilder.longitude(location.getLongitude());
+        MyLocationData locationData = locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
+    }
+
+    private void initLocation() {
+        LocationClientOption option = new LocationClientOption();
+        //option.setScanSpan(5000);
+        //option.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);//强制要求用GPS
+        option.setIsNeedAddress(true);
+        mLocationClient.setLocOption(option);
     }
 
     private class MyLocationListener implements BDLocationListener {
@@ -56,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder currentPosition = new StringBuilder();
             currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
             currentPosition.append("经线：").append(location.getLongitude()).append("\n");
+            currentPosition.append("国家：").append(location.getCountry()).append("\n");
+            currentPosition.append("省：").append(location.getProvince()).append("\n");
+            currentPosition.append("市：").append(location.getCity()).append("\n");
+            currentPosition.append("区：").append(location.getDistrict()).append("\n");
+            currentPosition.append("街道：").append(location.getStreet()).append("\n");
             currentPosition.append("定位方式：");
             if (location.getLocType() == BDLocation.TypeGpsLocation) {
                 currentPosition.append("GPS");
@@ -63,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
                 currentPosition.append("网络");
             }
             positionText.setText(currentPosition);
+
+
+            if ((location.getLocType() == BDLocation.TypeGpsLocation) || (location.getLocType() == BDLocation.TypeNetWorkLocation)) {
+                navigateTo(location);
+            }
+
         }
 
     }
@@ -87,5 +143,25 @@ public class MainActivity extends AppCompatActivity {
              break;
             default:
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLocationClient.stop();
+        mapView.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
     }
 }
