@@ -5,7 +5,15 @@
 
 
 ## FirstCode 
-基于郭霖著作的书新版《第一行代码》.
+基于郭霖著作的书新版《第一行代码》的练习demo。
 
 ## AndroidHeros
-基于徐宜生著作的书《Android群英传》.
+基于徐宜生著作的书《Android群英传》的联系demo。
+
+
+## DevilWeather
+基于《第一行代码》第二版CoolWeather自己重新实现完善。
+
+## SimplePoetry
+
+## LifeToDo
