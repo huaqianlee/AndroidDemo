@@ -8,7 +8,7 @@
     	For example:
     	<dbname value="demo" />
     -->
-    <dbname value="demo" />
+    <dbname value="devil_weather" />
 
     <!--
     	Define the version of your database. Each time you want
@@ -32,6 +32,9 @@
     	</list>
     -->
     <list>
+        <mapping class="com.example.lee.devilweather.db.City"/>
+        <mapping class="com.example.lee.devilweather.db.County"/>
+        <mapping class="com.example.lee.devilweather.db.Province"/>
     </list>
 
     <!--
@@ -44,5 +47,4 @@
         For example:
         <storage value="external" />
     -->
-
 </litepal>
