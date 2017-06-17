@@ -1,6 +1,7 @@
 package com.example.lee.devilweather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.example.lee.devilweather.util.Utility;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class ChooseAreaFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list_view);
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
+
         return view;
     }
 
@@ -85,6 +88,12 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -113,6 +122,7 @@ public class ChooseAreaFragment extends Fragment {
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
+            currentLevel = LEVEL_PROVINCE;
 
         } else {
             String address = "http://guolin.tech/api/china";
@@ -152,6 +162,7 @@ public class ChooseAreaFragment extends Fragment {
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
+            currentLevel = LEVEL_COUNTY;
 
         } else {
             int provinceCode = selectedProvince.getCode();
@@ -184,7 +195,7 @@ public class ChooseAreaFragment extends Fragment {
                     result = Utility.handleProvinceData(responseText);
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityData(responseText, selectedProvince.getId());
-                } else if ("County".equals(type)) {
+                } else if ("county".equals(type)) {
                     result = Utility.handleCountyData(responseText, selectedCity.getId());
                 }
 
@@ -193,7 +204,7 @@ public class ChooseAreaFragment extends Fragment {
                         @Override
                         public void run() {
                             closeProgressDialog();
-                            if ("provice".equals(type)) {
+                            if ("province".equals(type)) {
                                 queryProvinces();
                             } else if ("city".equals(type)) {
                                 queryCities();

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.example.lee.devilweather.db.City;
 import com.example.lee.devilweather.db.County;
 import com.example.lee.devilweather.db.Province;
+import com.example.lee.devilweather.gson.Weather;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -95,6 +96,20 @@ public class Utility {
             }
         }
         return false;
+    }
+
+
+    /*Parse and handle weather data*/
+    public static Weather handleWeatherData(String jsonData) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonData);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return  new Gson().fromJson(weatherContent, Weather.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
 
 }
