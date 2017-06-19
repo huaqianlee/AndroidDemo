@@ -1,5 +1,6 @@
 package com.example.lee.devilweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lee.devilweather.gson.Forecast;
 import com.example.lee.devilweather.gson.Weather;
+import com.example.lee.devilweather.service.AutoUpdateService;
 import com.example.lee.devilweather.util.OkHttpUtil;
 import com.example.lee.devilweather.util.Utility;
 
@@ -168,12 +170,14 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carwash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
 
     }
 
     public void requestWeather(final String weatherId) {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" +
-                weatherId+"&key=db69bfce50fc42deaeba83406ad6bf9d";
+                weatherId + "&key=db69bfce50fc42deaeba83406ad6bf9d";
         OkHttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
