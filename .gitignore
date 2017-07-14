@@ -1,28 +1,16 @@
 # .idea
-/*/.idea/
-/*/*/.idea/
-/*/*/*/.idea/
+.idea/
 
 
 # Built application files
-/*/*.apk
-/*/*.ap_
-
-/*/*/*.apk
-/*/*/*.ap_
-
-/*/*/*/*.apk
-/*/*/*/*.ap_
+*.apk
+*.ap_
 
 # Files for the Dalvik VM
-/*/*.dex
-/*/*/*.dex
-/*/*/*/*.dex
+*.dex
 
 # Class files
-/*/*.class
-/*/*/*.class
-/*/*/*/*.class
+*.class
 
 # Generated files
 /*/bin/
